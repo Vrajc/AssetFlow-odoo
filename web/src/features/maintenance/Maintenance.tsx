@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors, useDroppable, useDraggable, DragStartEvent, DragEndEvent } from '@dnd-kit/core';
+import { DndContext, DragOverlay, MouseSensor, TouchSensor, useSensor, useSensors, useDroppable, useDraggable, DragStartEvent, DragEndEvent } from '@dnd-kit/core';
 import { motion } from 'framer-motion';
 import { Plus, Wrench } from 'lucide-react';
 import { useMaintenance, useAssets, useMaintenanceMutations } from '../../api/hooks';
@@ -35,7 +35,11 @@ export default function Maintenance() {
   const [raiseOpen, setRaiseOpen] = useState(params.get('new') === '1');
   const [active, setActive] = useState<any>(null);
   const [extra, setExtra] = useState<{ card: any; to: string } | null>(null);
-  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
+  const sensors = useSensors(
+    useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
+    // Touch: long-press ~200ms to start a drag, so a quick swipe still scrolls the board.
+    useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 8 } }),
+  );
 
   useEffect(() => { if (params.get('new') === '1') { setRaiseOpen(true); params.delete('new'); setParams(params, { replace: true }); } }, []);
 
@@ -59,9 +63,11 @@ export default function Maintenance() {
       {!isManager(user?.role) && <p className="mb-3 rounded-lg border border-border bg-white/[0.02] px-3 py-2 text-xs text-txt-muted">Drag actions are manager-only — you can still raise requests. Approving a card moves the asset to Under Maintenance; resolving it returns the asset to Available.</p>}
 
       <DndContext sensors={sensors} onDragStart={onStart} onDragEnd={onEnd}>
-        <div className="grid gap-3 overflow-x-auto lg:grid-cols-5">
+        <div className="flex gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-5 lg:overflow-visible">
           {COLUMNS.map((col) => (
-            <Column key={col.key} id={col.key} label={col.label} cards={data?.board?.[col.key] ?? []} draggable={isManager(user?.role)} />
+            <div key={col.key} className="w-[80vw] shrink-0 sm:w-72 lg:w-auto">
+              <Column id={col.key} label={col.label} cards={data?.board?.[col.key] ?? []} draggable={isManager(user?.role)} />
+            </div>
           ))}
         </div>
         <DragOverlay>{active && <CardBody card={active} dragging />}</DragOverlay>
@@ -91,7 +97,13 @@ function Column({ id, label, cards, draggable }: { id: string; label: string; ca
 function Draggable({ card }: { card: any }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: card.id, data: { card } });
   return (
-    <div ref={setNodeRef} {...listeners} {...attributes} className={`cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-30' : ''}`}>
+    <div
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={{ touchAction: 'none' }}
+      className={`cursor-grab select-none active:cursor-grabbing ${isDragging ? 'opacity-30' : ''}`}
+    >
       <CardBody card={card} />
     </div>
   );

@@ -130,20 +130,21 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
   }, [open, onClose]);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        className={`glass relative z-10 w-full ${wide ? 'max-w-3xl' : 'max-w-lg'} rounded-t-2xl sm:rounded-2xl border border-border shadow-soft max-h-[92vh] overflow-y-auto`}
+        className={`glass relative z-10 flex max-h-[85vh] w-full flex-col overflow-hidden rounded-2xl border border-border shadow-soft max-w-lg ${wide ? '!max-w-3xl' : ''}`}
       >
+        {/* Fixed header so title + close stay reachable while the body scrolls */}
         {title && (
-          <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
-            <h3 className="font-display text-lg font-semibold">{title}</h3>
-            <button onClick={onClose} className="text-txt-muted hover:text-txt"><X size={18} /></button>
+          <div className="flex shrink-0 items-center justify-between border-b border-border bg-surface/95 px-4 py-3 backdrop-blur sm:px-5 sm:py-3.5">
+            <h3 className="font-display text-base font-semibold sm:text-lg">{title}</h3>
+            <button onClick={onClose} className="rounded-md p-1 text-txt-muted hover:text-txt"><X size={18} /></button>
           </div>
         )}
-        <div className="p-5">{children}</div>
+        <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5">{children}</div>
       </motion.div>
     </div>
   );
@@ -183,7 +184,7 @@ export function PageHeader({ title, subtitle, actions }: { title: string; subtit
         <h1 className="font-display text-2xl font-bold tracking-tight">{title}</h1>
         {subtitle && <p className="mt-1 text-sm text-txt-muted">{subtitle}</p>}
       </div>
-      {actions && <div className="flex items-center gap-2">{actions}</div>}
+      {actions && <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">{actions}</div>}
     </div>
   );
 }

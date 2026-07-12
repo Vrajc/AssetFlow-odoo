@@ -57,7 +57,8 @@ function Departments() {
         <h3 className="font-medium">Departments</h3>
         <Button onClick={() => start()}><Plus size={16} /> Add Department</Button>
       </div>
-      <table className="w-full text-sm">
+      <div className="overflow-x-auto">
+      <table className="w-full min-w-[560px] text-sm">
         <thead className="text-left text-xs uppercase text-txt-muted">
           <tr className="border-b border-border">
             <th className="px-4 py-2.5">Department</th><th className="px-4 py-2.5">Head</th>
@@ -78,6 +79,7 @@ function Departments() {
           ))}
         </tbody>
       </table>
+      </div>
 
       <Modal open={open} onClose={() => setOpen(false)} title={edit ? 'Edit department' : 'New department'}>
         <div className="space-y-3">
@@ -194,7 +196,7 @@ function Directory() {
     <Card className="overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-4">
         <h3 className="font-medium">Employee Directory</h3>
-        <Input placeholder="Search name or email…" value={q} onChange={(e) => setQ(e.target.value)} className="w-64" />
+        <Input placeholder="Search name or email…" value={q} onChange={(e) => setQ(e.target.value)} className="w-full sm:w-64" />
       </div>
       <p className="border-b border-border bg-white/[0.02] px-4 py-2 text-xs text-txt-muted">
         This is the <span className="text-txt">only</span> place roles are assigned — promote employees to Department Head or Asset Manager here.

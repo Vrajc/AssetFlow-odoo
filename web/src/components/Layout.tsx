@@ -27,7 +27,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen overflow-hidden bg-bg">
       {/* Sidebar */}
-      <aside className={`${mobileOpen ? 'flex' : 'hidden'} lg:flex w-64 shrink-0 flex-col border-r border-border bg-surface fixed lg:static inset-y-0 z-40`}>
+      {/* Mobile backdrop */}
+      {mobileOpen && <div className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)} />}
+
+      <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 flex-col border-r border-border bg-surface transition-transform duration-300 lg:static lg:translate-x-0 ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div className="flex h-16 items-center border-b border-border px-3"><Logo /></div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">
           {items.map((item) => (
@@ -62,17 +65,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 shrink-0 items-center gap-3 border-b border-border bg-surface/80 px-4 backdrop-blur">
-          <button className="lg:hidden text-txt-muted" onClick={() => setMobileOpen((v) => !v)}><Menu size={20} /></button>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-border bg-surface/80 px-3 backdrop-blur sm:gap-3 sm:px-4">
+          <button className="shrink-0 lg:hidden text-txt-muted" onClick={() => setMobileOpen((v) => !v)}><Menu size={20} /></button>
           <button
             onClick={() => setPalette(true)}
-            className="flex flex-1 max-w-md items-center gap-2 rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-txt-muted hover:border-white/20"
+            className="flex min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-txt-muted hover:border-white/20"
           >
-            <Search size={15} />
-            <span className="flex-1 text-left">Search or jump to…</span>
+            <Search size={15} className="shrink-0" />
+            <span className="flex-1 truncate text-left">Search or jump to…</span>
             <kbd className="hidden sm:flex items-center gap-0.5 rounded border border-border px-1.5 py-0.5 text-[10px]"><Command size={10} />K</kbd>
           </button>
-          <div className="ml-auto flex items-center gap-1.5">
+          <div className="ml-auto flex shrink-0 items-center gap-1.5">
             <button onClick={() => setScanner(true)} className="flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-bg hover:bg-primary-hover">
               <ScanLine size={16} /> <span className="hidden sm:inline">Scan</span>
             </button>

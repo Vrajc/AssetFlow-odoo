@@ -155,7 +155,7 @@ function AuditScanner({ cycleId, onClose }: { cycleId: string; onClose: () => vo
       <div className="space-y-4">
         {!tag ? (
           <>
-            <div id="audit-qr" className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-black" />
+            <div id="audit-qr" className="mx-auto aspect-square w-full max-w-[15rem] overflow-hidden rounded-xl border border-border bg-black sm:max-w-xs" />
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" onClick={start}><Camera size={16} /> Camera</Button>
               <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-border px-3.5 py-2 text-sm text-txt transition-colors hover:bg-white/5">

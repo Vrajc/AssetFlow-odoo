@@ -35,7 +35,7 @@ export default function Bookings() {
     <div>
       <PageHeader title="Resource Booking" subtitle="Time-slot booking of shared resources — with overlap validation."
         actions={
-          <Select value={activeResource} onChange={(e) => setResourceId(e.target.value)} className="w-56">
+          <Select value={activeResource} onChange={(e) => setResourceId(e.target.value)} className="w-full sm:w-56">
             {resources?.map((r) => <option key={r.id} value={r.id}>{r.name} · {r.location}</option>)}
           </Select>
         } />

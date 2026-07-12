@@ -73,7 +73,7 @@ export function QRScanner() {
   return (
     <Modal open={scannerOpen} onClose={() => setScanner(false)} title="Scan asset QR">
       <div className="space-y-4">
-        <div id="qr-reader" className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-black" />
+        <div id="qr-reader" className="mx-auto aspect-square w-full max-w-[15rem] overflow-hidden rounded-xl border border-border bg-black sm:max-w-xs" />
         <div className="grid grid-cols-2 gap-2">
           {!camActive ? (
             <Button variant="outline" onClick={start}><Camera size={16} /> Camera</Button>
