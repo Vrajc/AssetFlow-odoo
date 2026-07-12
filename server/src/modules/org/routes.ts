@@ -19,8 +19,8 @@ router.post(
   adminOnly,
   validate(z.object({
     name: z.string().min(2),
-    headId: z.string().optional(),
-    parentId: z.string().optional(),
+    headId: z.string().nullable().optional(),
+    parentId: z.string().nullable().optional(),
     status: z.enum(['ACTIVE', 'INACTIVE']).optional(),
   })),
   asyncHandler(async (req, res) => res.status(201).json(await service.createDepartment(req.user!.id, req.body))),

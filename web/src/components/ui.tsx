@@ -13,17 +13,17 @@ export function Button({
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: BtnVariant; loading?: boolean }) {
   const styles: Record<BtnVariant, string> = {
-    primary: 'bg-primary text-bg hover:bg-primary-hover font-semibold',
-    ghost: 'text-txt-muted hover:text-txt hover:bg-white/5',
-    danger: 'bg-danger/90 text-white hover:bg-danger',
-    outline: 'border border-border text-txt hover:bg-white/5',
-    subtle: 'bg-white/5 text-txt hover:bg-white/10',
+    primary: 'bg-primary text-white hover:bg-primary-hover font-semibold shadow-primary-btn',
+    ghost: 'text-txt-muted hover:text-txt hover:bg-elevated',
+    danger: 'bg-danger text-white hover:brightness-95 font-semibold',
+    outline: 'border border-border bg-surface text-txt hover:bg-elevated',
+    subtle: 'bg-elevated text-txt hover:bg-tint',
   };
   return (
     <button
       {...props}
       disabled={props.disabled || loading}
-      className={`inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${styles[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed ${styles[variant]} ${className}`}
     >
       {loading && <Loader2 size={15} className="animate-spin" />}
       {children}
@@ -131,7 +131,7 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-[#1F2937]/40" onClick={onClose} />
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -139,7 +139,7 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
       >
         {/* Fixed header so title + close stay reachable while the body scrolls */}
         {title && (
-          <div className="flex shrink-0 items-center justify-between border-b border-border bg-surface/95 px-4 py-3 backdrop-blur sm:px-5 sm:py-3.5">
+          <div className="flex shrink-0 items-center justify-between border-b border-border bg-surface px-4 py-3 sm:px-5 sm:py-3.5">
             <h3 className="font-display text-base font-semibold sm:text-lg">{title}</h3>
             <button onClick={onClose} className="rounded-md p-1 text-txt-muted hover:text-txt"><X size={18} /></button>
           </div>
@@ -153,8 +153,8 @@ export function Modal({ open, onClose, title, children, wide }: { open: boolean;
 /* -------------------------------- Skeleton -------------------------------- */
 export function Skeleton({ className = '' }: { className?: string }) {
   return (
-    <div className={`relative overflow-hidden rounded-lg bg-white/5 ${className}`}>
-      <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <div className={`relative overflow-hidden rounded-lg bg-elevated ${className}`}>
+      <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/60 to-transparent" />
     </div>
   );
 }
@@ -163,9 +163,9 @@ export function Skeleton({ className = '' }: { className?: string }) {
 export function EmptyState({ title, hint, icon, action }: { title: string; hint?: string; icon?: React.ReactNode; action?: React.ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center gap-3 py-16 text-center">
-      <div className="rounded-2xl bg-white/5 p-4 text-txt-muted">{icon ?? <Inbox size={28} />}</div>
+      <div className="grid h-14 w-14 place-items-center rounded-2xl border border-border bg-bg-alt text-primary">{icon ?? <Inbox size={26} />}</div>
       <div>
-        <p className="font-medium text-txt">{title}</p>
+        <p className="font-script text-2xl font-bold text-txt">{title}</p>
         {hint && <p className="mt-1 text-sm text-txt-muted">{hint}</p>}
       </div>
       {action}
@@ -181,8 +181,8 @@ export function PageHeader({ title, subtitle, actions }: { title: string; subtit
   return (
     <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h1 className="font-display text-2xl font-bold tracking-tight">{title}</h1>
-        {subtitle && <p className="mt-1 text-sm text-txt-muted">{subtitle}</p>}
+        <h1 className="font-script text-4xl font-bold leading-none tracking-tight text-txt">{title}</h1>
+        {subtitle && <p className="mt-1.5 text-sm text-txt-muted">{subtitle}</p>}
       </div>
       {actions && <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">{actions}</div>}
     </div>

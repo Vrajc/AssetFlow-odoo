@@ -5,6 +5,7 @@ import { AlertTriangle, ArrowLeftRight, Check, X, RotateCcw } from 'lucide-react
 import { useAllocations, useTransfers, useAssets, useUsers, useAllocationMutations } from '../../api/hooks';
 import { useAuth, isManager, canApprove } from '../../stores/auth';
 import { Card, Button, Select, Input, Textarea, Modal, Pill, PageHeader, EmptyState } from '../../components/ui';
+import { Wavy } from '../../components/accents';
 import { TRANSFER_STATUS } from '../../lib/status';
 import { fmtDate } from '../../lib/format';
 import { apiError } from '../../api/client';
@@ -64,12 +65,12 @@ export default function Allocations() {
               {allocations?.map((al) => {
                 const overdue = al.status === 'OVERDUE' || (al.expectedReturnDate && new Date(al.expectedReturnDate) < new Date() && !al.returnedAt);
                 return (
-                  <tr key={al.id} className={`border-b border-border/60 ${overdue ? 'bg-danger/5' : 'hover:bg-white/[0.02]'}`}>
+                  <tr key={al.id} className={`border-b border-border/60 ${overdue ? 'bg-danger/5' : 'hover:bg-tint/50'}`}>
                     <td className="px-4 py-3"><span className="font-mono text-primary">{al.asset.assetTag}</span> · {al.asset.name}</td>
                     <td className="px-4 py-3">{al.allocatedTo.name}<span className="text-txt-muted">{al.allocatedTo.department?.name ? ` · ${al.allocatedTo.department.name}` : ''}</span></td>
                     <td className="px-4 py-3 text-txt-muted">{fmtDate(al.allocatedAt)}</td>
                     <td className={`px-4 py-3 ${overdue ? 'text-danger' : 'text-txt-muted'}`}>{fmtDate(al.expectedReturnDate)}</td>
-                    <td className="px-4 py-3">{overdue ? <Pill style={{ label: 'Overdue', dot: '#F87171', bg: '#F8717120', text: '#F87171' }} /> : <Pill style={{ label: 'Active', dot: '#60A5FA', bg: '#60A5FA20', text: '#60A5FA' }} />}</td>
+                    <td className="px-4 py-3">{overdue ? <Pill style={{ label: 'Overdue', dot: '#E4585B', bg: '#E4585B20', text: '#E4585B' }} /> : <Pill style={{ label: 'Active', dot: '#5B9BD5', bg: '#5B9BD520', text: '#5B9BD5' }} />}</td>
                     <td className="px-4 py-3 text-right">{isManager(user?.role) && <button onClick={() => setReturnFor(al)} className="inline-flex items-center gap-1 text-xs text-txt-muted hover:text-primary"><RotateCcw size={13} /> Return</button>}</td>
                   </tr>
                 );
@@ -136,13 +137,13 @@ function AllocateForm() {
         {/* The double-allocation block in action */}
         {isAllocated && !conflict && (
           <div className="rounded-lg border border-danger/40 bg-danger/10 p-3 text-sm text-danger">
-            <div className="flex items-center gap-2 font-medium"><AlertTriangle size={15} /> Already allocated — {selected?.name}</div>
+            <div className="flex items-center gap-2 font-medium"><AlertTriangle size={15} /> <Wavy color="#E4585B">Already allocated</Wavy> — {selected?.name}</div>
             <p className="mt-1 text-danger/90">Direct re-allocation is blocked. Submit a transfer request below.</p>
           </div>
         )}
         {conflict && (
           <div className="rounded-lg border border-danger/40 bg-danger/10 p-3 text-sm text-danger">
-            <div className="flex items-center gap-2 font-medium"><AlertTriangle size={15} /> Already allocated to {conflict.currentHolder?.name} {conflict.currentHolder?.department ? `(${conflict.currentHolder.department})` : ''}</div>
+            <div className="flex items-center gap-2 font-medium"><AlertTriangle size={15} /> <Wavy color="#E4585B">Already allocated</Wavy> to {conflict.currentHolder?.name} {conflict.currentHolder?.department ? `(${conflict.currentHolder.department})` : ''}</div>
             <p className="mt-1 text-danger/90">Direct re-allocation is blocked — submit a transfer request.</p>
           </div>
         )}

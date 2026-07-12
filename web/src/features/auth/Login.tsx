@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { api, apiError } from '../../api/client';
 import { useAuth } from '../../stores/auth';
@@ -61,18 +62,21 @@ export default function Login() {
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg px-4">
       <div className="aurora" />
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="relative z-10 w-full max-w-md">
+        <Link to="/" className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-txt-muted transition-colors hover:text-primary">
+          <ArrowLeft size={15} /> Back to home
+        </Link>
         <div className="mb-6 flex items-center justify-center gap-2">
-          <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary text-bg font-display text-xl font-bold">A</div>
-          <span className="font-display text-2xl font-bold">AssetFlow</span>
+          <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary text-xl font-bold text-white">A</div>
+          <span className="font-display text-2xl font-bold text-primary">AssetFlow</span>
         </div>
         <div className="glass rounded-2xl border border-border p-6 shadow-soft">
-          <h1 className="font-display text-xl font-semibold">
-            {mode === 'login' ? 'Welcome back' : mode === 'signup' ? 'Create your account' : 'Reset password'}
+          <h1 className="font-script text-3xl font-bold text-txt">
+            {mode === 'login' ? 'Welcome back!' : mode === 'signup' ? 'Create your account' : 'Reset password'}
           </h1>
           <p className="mt-1 text-sm text-txt-muted">
             {mode === 'signup'
               ? 'Sign up creates an employee account — admin roles are assigned later.'
-              : mode === 'forgot' ? 'We’ll generate a reset token (printed to the server console).' : 'Sign in to your workspace.'}
+              : mode === 'forgot' ? 'We’ll email you a link to reset your password.' : 'Sign in to your workspace.'}
           </p>
 
           <form onSubmit={submit} className="mt-5 space-y-3">
@@ -81,7 +85,7 @@ export default function Login() {
             {mode !== 'forgot' && <PasswordInput label="Password" value={form.password} onChange={set('password')} placeholder="••••••••" required />}
             {err.form && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{err.form}</p>}
             <Button type="submit" loading={loading} className="w-full">
-              {mode === 'login' ? 'Sign in' : mode === 'signup' ? 'Create account' : 'Send reset token'}
+              {mode === 'login' ? 'Sign in' : mode === 'signup' ? 'Create account' : 'reset password'}
             </Button>
           </form>
 
@@ -103,7 +107,7 @@ export default function Login() {
           <div className="grid grid-cols-2 gap-2">
             {DEMO.map((d) => (
               <button key={d.email} onClick={() => doLogin(d.email, 'Demo@123')} disabled={loading}
-                className="rounded-lg border border-border bg-surface/60 px-3 py-2 text-sm hover:border-primary/50 hover:bg-white/5 disabled:opacity-50">
+                className="rounded-lg border border-border bg-surface/60 px-3 py-2 text-sm hover:border-primary/50 hover:bg-black/[0.05] disabled:opacity-50">
                 <span className="font-medium">{d.label}</span>
                 <span className="block truncate text-[11px] text-txt-muted">{d.email}</span>
               </button>

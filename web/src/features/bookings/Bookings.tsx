@@ -64,7 +64,7 @@ export default function Bookings() {
                     <div key={d.toISOString() + h} onClick={() => !items.length && openSlot(d, h)}
                       className={`min-h-[44px] border-t border-l border-border/60 p-0.5 ${!items.length ? 'cursor-pointer hover:bg-primary/5' : ''}`}>
                       {items.map((b) => (
-                        <div key={b.id} className="rounded-md px-1.5 py-1 text-[10px] leading-tight" style={{ background: '#60A5FA22', color: '#93c5fd' }} title={`${b.bookedBy.name}: ${fmtTime(b.startTime)}-${fmtTime(b.endTime)}`}>
+                        <div key={b.id} className="rounded-md px-1.5 py-1 text-[10px] leading-tight" style={{ background: '#5B9BD522', color: '#5B9BD5' }} title={`${b.bookedBy.name}: ${fmtTime(b.startTime)}-${fmtTime(b.endTime)}`}>
                           <span className="font-medium">{fmtTime(b.startTime)}–{fmtTime(b.endTime)}</span><br />{b.bookedBy.name}
                         </div>
                       ))}

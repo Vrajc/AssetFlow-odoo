@@ -49,7 +49,7 @@ export default function AssetDetail() {
               {!!a.customFieldValues && Object.keys(a.customFieldValues).length > 0 && (
                 <div className="mt-3 flex flex-wrap gap-2">
                   {Object.entries(a.customFieldValues).map(([k, v]) => (
-                    <span key={k} className="rounded-md bg-white/5 px-2 py-1 text-xs text-txt-muted">{k}: <span className="text-txt">{String(v)}</span></span>
+                    <span key={k} className="rounded-md bg-black/[0.05] px-2 py-1 text-xs text-txt-muted">{k}: <span className="text-txt">{String(v)}</span></span>
                   ))}
                 </div>
               )}
@@ -94,8 +94,8 @@ export default function AssetDetail() {
       {/* History tabs */}
       <Card className="mt-4 overflow-hidden">
         <div className="flex gap-1 border-b border-border p-2">
-          <button onClick={() => setTab('alloc')} className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm ${tab === 'alloc' ? 'bg-white/5 text-txt' : 'text-txt-muted'}`}><History size={15} /> Allocation history</button>
-          <button onClick={() => setTab('maint')} className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm ${tab === 'maint' ? 'bg-white/5 text-txt' : 'text-txt-muted'}`}><Wrench size={15} /> Maintenance history</button>
+          <button onClick={() => setTab('alloc')} className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm ${tab === 'alloc' ? 'bg-black/[0.05] text-txt' : 'text-txt-muted'}`}><History size={15} /> Allocation history</button>
+          <button onClick={() => setTab('maint')} className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm ${tab === 'maint' ? 'bg-black/[0.05] text-txt' : 'text-txt-muted'}`}><Wrench size={15} /> Maintenance history</button>
         </div>
         <div className="p-4">
           {tab === 'alloc' ? (
@@ -104,7 +104,7 @@ export default function AssetDetail() {
                 {a.allocations.map((al: any) => (
                   <div key={al.id} className="flex items-center justify-between py-2.5">
                     <span>{fmtDate(al.allocatedAt)} — Allocated to <span className="text-txt">{al.allocatedTo.name}</span>{al.department?.name && ` · ${al.department.name}`}</span>
-                    <span className="text-txt-muted">{al.returnedAt ? `Returned ${fmtDate(al.returnedAt)}${al.checkInCondition ? ` · ${al.checkInCondition}` : ''}` : <Pill style={{ label: al.status, dot: '#60A5FA', bg: '#60A5FA20', text: '#60A5FA' }} />}</span>
+                    <span className="text-txt-muted">{al.returnedAt ? `Returned ${fmtDate(al.returnedAt)}${al.checkInCondition ? ` · ${al.checkInCondition}` : ''}` : <Pill style={{ label: al.status, dot: '#5B9BD5', bg: '#5B9BD520', text: '#5B9BD5' }} />}</span>
                   </div>
                 ))}
               </div>

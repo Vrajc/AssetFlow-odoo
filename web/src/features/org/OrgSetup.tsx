@@ -68,12 +68,12 @@ function Departments() {
         </thead>
         <tbody>
           {depts?.map((d) => (
-            <tr key={d.id} className="border-b border-border/60 hover:bg-white/[0.02]">
+            <tr key={d.id} className="border-b border-border/60 hover:bg-tint/50">
               <td className="px-4 py-3 font-medium" style={{ paddingLeft: d.parentId ? 32 : 16 }}>{d.parentId && '↳ '}{d.name}</td>
               <td className="px-4 py-3 text-txt-muted">{d.head?.name ?? '—'}</td>
               <td className="px-4 py-3 text-txt-muted">{d.parent?.name ?? '—'}</td>
               <td className="px-4 py-3 tnum">{d._count?.assets ?? 0}</td>
-              <td className="px-4 py-3"><Pill style={{ label: d.status === 'ACTIVE' ? 'Active' : 'Inactive', dot: d.status === 'ACTIVE' ? '#10B981' : '#9CA3AF', bg: d.status === 'ACTIVE' ? '#10B98120' : '#9CA3AF20', text: d.status === 'ACTIVE' ? '#10B981' : '#9CA3AF' }} /></td>
+              <td className="px-4 py-3"><Pill style={{ label: d.status === 'ACTIVE' ? 'Active' : 'Inactive', dot: d.status === 'ACTIVE' ? '#21B799' : '#8F8F9F', bg: d.status === 'ACTIVE' ? '#21B79920' : '#8F8F9F20', text: d.status === 'ACTIVE' ? '#21B799' : '#8F8F9F' }} /></td>
               <td className="px-4 py-3 text-right"><button onClick={() => start(d)} className="text-txt-muted hover:text-txt"><Pencil size={15} /></button></td>
             </tr>
           ))}
@@ -147,7 +147,7 @@ function Categories() {
             </div>
             {!!c.customFields?.length && (
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {c.customFields.map((f) => <span key={f.key} className="rounded-md bg-white/5 px-2 py-0.5 text-[11px] text-txt-muted">{f.label}</span>)}
+                {c.customFields.map((f) => <span key={f.key} className="rounded-md bg-black/[0.05] px-2 py-0.5 text-[11px] text-txt-muted">{f.label}</span>)}
               </div>
             )}
           </Card>
@@ -198,7 +198,7 @@ function Directory() {
         <h3 className="font-medium">Employee Directory</h3>
         <Input placeholder="Search name or email…" value={q} onChange={(e) => setQ(e.target.value)} className="w-full sm:w-64" />
       </div>
-      <p className="border-b border-border bg-white/[0.02] px-4 py-2 text-xs text-txt-muted">
+      <p className="border-b border-border bg-black/[0.02] px-4 py-2 text-xs text-txt-muted">
         This is the <span className="text-txt">only</span> place roles are assigned — promote employees to Department Head or Asset Manager here.
       </p>
       <div className="overflow-x-auto">
@@ -211,7 +211,7 @@ function Directory() {
           </thead>
           <tbody>
             {users?.map((u) => (
-              <tr key={u.id} className="border-b border-border/60 hover:bg-white/[0.02]">
+              <tr key={u.id} className="border-b border-border/60 hover:bg-tint/50">
                 <td className="px-4 py-3 font-medium">{u.name}</td>
                 <td className="px-4 py-3 text-txt-muted">{u.email}</td>
                 <td className="px-4 py-3">
@@ -229,7 +229,7 @@ function Directory() {
                 </td>
                 <td className="px-4 py-3">
                   <button onClick={() => setStatus.mutate({ id: u.id, status: u.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE' }, { onSuccess: () => toast.success('Updated') })}>
-                    <Pill style={{ label: u.status === 'ACTIVE' ? 'Active' : 'Inactive', dot: u.status === 'ACTIVE' ? '#10B981' : '#9CA3AF', bg: u.status === 'ACTIVE' ? '#10B98120' : '#9CA3AF20', text: u.status === 'ACTIVE' ? '#10B981' : '#9CA3AF' }} />
+                    <Pill style={{ label: u.status === 'ACTIVE' ? 'Active' : 'Inactive', dot: u.status === 'ACTIVE' ? '#21B799' : '#8F8F9F', bg: u.status === 'ACTIVE' ? '#21B79920' : '#8F8F9F20', text: u.status === 'ACTIVE' ? '#21B799' : '#8F8F9F' }} />
                   </button>
                 </td>
               </tr>

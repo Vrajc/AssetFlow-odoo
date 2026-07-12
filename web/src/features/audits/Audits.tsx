@@ -12,8 +12,8 @@ function Ring({ pct }: { pct: number }) {
   const r = 22, c = 2 * Math.PI * r;
   return (
     <svg width="56" height="56" viewBox="0 0 56 56" className="-rotate-90">
-      <circle cx="28" cy="28" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="5" />
-      <circle cx="28" cy="28" r={r} fill="none" stroke="#10B981" strokeWidth="5" strokeLinecap="round"
+      <circle cx="28" cy="28" r={r} fill="none" stroke="#EBEBF0" strokeWidth="5" />
+      <circle cx="28" cy="28" r={r} fill="none" stroke="#21B799" strokeWidth="5" strokeLinecap="round"
         strokeDasharray={c} strokeDashoffset={c - (c * pct) / 100} style={{ transition: 'stroke-dashoffset 0.6s ease' }} />
       <text x="28" y="28" transform="rotate(90 28 28)" textAnchor="middle" dominantBaseline="central" className="fill-txt text-[11px] font-semibold">{pct}%</text>
     </svg>
@@ -38,11 +38,11 @@ export default function Audits() {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <h3 className="font-medium">{c.name}</h3>
-                  <Pill style={c.status === 'OPEN' ? { label: 'Open', dot: '#10B981', bg: '#10B98120', text: '#10B981' } : { label: 'Closed', dot: '#9CA3AF', bg: '#9CA3AF20', text: '#9CA3AF' }} />
+                  <Pill style={c.status === 'OPEN' ? { label: 'Open', dot: '#21B799', bg: '#21B79920', text: '#21B799' } : { label: 'Closed', dot: '#8F8F9F', bg: '#8F8F9F20', text: '#8F8F9F' }} />
                 </div>
                 <p className="mt-1 text-xs text-txt-muted">{fmtDate(c.startDate)} – {fmtDate(c.endDate)} · {c.done}/{c.total} verified</p>
                 <div className="mt-2 flex flex-wrap gap-1">
-                  {c.auditors?.map((a: any) => <span key={a.id} className="rounded-full bg-white/5 px-2 py-0.5 text-[11px] text-txt-muted">{a.auditor.name}</span>)}
+                  {c.auditors?.map((a: any) => <span key={a.id} className="rounded-full bg-black/[0.05] px-2 py-0.5 text-[11px] text-txt-muted">{a.auditor.name}</span>)}
                 </div>
               </div>
             </Card>
@@ -91,7 +91,7 @@ function CreateModal({ onClose }: { onClose: () => void }) {
           <div className="flex flex-wrap gap-1.5">
             {users?.map((u) => (
               <button key={u.id} onClick={() => setAuditorIds((prev) => prev.includes(u.id) ? prev.filter((x) => x !== u.id) : [...prev, u.id])}
-                className={`rounded-full px-2.5 py-1 text-xs ${auditorIds.includes(u.id) ? 'bg-primary text-bg' : 'bg-white/5 text-txt-muted hover:text-txt'}`}>
+                className={`rounded-full px-2.5 py-1 text-xs ${auditorIds.includes(u.id) ? 'bg-primary text-bg' : 'bg-black/[0.05] text-txt-muted hover:text-txt'}`}>
                 {u.name}
               </button>
             ))}

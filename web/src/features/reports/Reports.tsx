@@ -41,13 +41,13 @@ export default function Reports() {
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={util ?? []}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-              <XAxis dataKey="name" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
-              <YAxis tick={{ fill: '#9CA3AF', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#1A1E23', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8 }} />
-              <Bar dataKey="allocated" stackId="a" fill="#60A5FA" radius={[0, 0, 0, 0]} />
-              <Bar dataKey="available" stackId="a" fill="#10B981" />
-              <Bar dataKey="maintenance" stackId="a" fill="#FBBF24" radius={[4, 4, 0, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(31,41,55,0.08)" />
+              <XAxis dataKey="name" tick={{ fill: '#8F8F9F', fontSize: 11 }} />
+              <YAxis tick={{ fill: '#8F8F9F', fontSize: 11 }} />
+              <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #EBEBF0', borderRadius: 8 }} />
+              <Bar dataKey="allocated" stackId="a" fill="#5B9BD5" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="available" stackId="a" fill="#21B799" />
+              <Bar dataKey="maintenance" stackId="a" fill="#E9A93D" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </Card>
@@ -57,11 +57,11 @@ export default function Reports() {
           <h3 className="mb-3 font-medium">Maintenance frequency</h3>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={freq?.trend ?? []}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-              <XAxis dataKey="month" tick={{ fill: '#9CA3AF', fontSize: 11 }} />
-              <YAxis tick={{ fill: '#9CA3AF', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#1A1E23', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8 }} />
-              <Line type="monotone" dataKey="count" stroke="#F87171" strokeWidth={2} dot={{ fill: '#F87171' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(31,41,55,0.08)" />
+              <XAxis dataKey="month" tick={{ fill: '#8F8F9F', fontSize: 11 }} />
+              <YAxis tick={{ fill: '#8F8F9F', fontSize: 11 }} />
+              <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #EBEBF0', borderRadius: 8 }} />
+              <Line type="monotone" dataKey="count" stroke="#E4585B" strokeWidth={2} dot={{ fill: '#E4585B' }} />
             </LineChart>
           </ResponsiveContainer>
         </Card>
@@ -73,7 +73,7 @@ export default function Reports() {
           <h3 className="mb-3 flex items-center gap-2 font-medium"><TrendingUp size={16} className="text-primary" /> Most-used assets</h3>
           <div className="space-y-1.5">
             {mui?.mostUsed?.map((a: any) => (
-              <div key={a.id} className="flex items-center justify-between rounded-lg bg-white/[0.02] px-3 py-2 text-sm">
+              <div key={a.id} className="flex items-center justify-between rounded-lg bg-black/[0.02] px-3 py-2 text-sm">
                 <span><span className="font-mono text-primary">{a.assetTag}</span> · {a.name}</span>
                 <span className="text-txt-muted tnum">{a.uses} uses</span>
               </div>
@@ -84,7 +84,7 @@ export default function Reports() {
           <h3 className="mb-3 flex items-center gap-2 font-medium"><Clock size={16} className="text-warning" /> Idle assets (45+ days)</h3>
           <div className="space-y-1.5">
             {mui?.idle?.length ? mui.idle.map((a: any) => (
-              <div key={a.id} className="flex items-center justify-between rounded-lg bg-white/[0.02] px-3 py-2 text-sm">
+              <div key={a.id} className="flex items-center justify-between rounded-lg bg-black/[0.02] px-3 py-2 text-sm">
                 <span><span className="font-mono text-primary">{a.assetTag}</span> · {a.name}</span>
                 <span className="text-txt-muted">idle</span>
               </div>
@@ -99,7 +99,7 @@ export default function Reports() {
           <h3 className="mb-3 font-medium">Due for maintenance / nearing retirement</h3>
           <div className="space-y-1.5 text-sm">
             {due?.nearingRetirement?.map((a: any) => (
-              <div key={a.id} className="flex items-center justify-between rounded-lg bg-white/[0.02] px-3 py-2">
+              <div key={a.id} className="flex items-center justify-between rounded-lg bg-black/[0.02] px-3 py-2">
                 <span><span className="font-mono text-primary">{a.assetTag}</span> · {a.name}</span>
                 <span className="text-warning text-xs">{a.condition === 'POOR' ? 'poor condition' : 'nearing retirement'}</span>
               </div>
@@ -114,7 +114,7 @@ export default function Reports() {
           </div>
           <div className="space-y-1.5 text-sm">
             {deptAlloc?.map((d: any) => (
-              <div key={d.name} className="flex items-center justify-between rounded-lg bg-white/[0.02] px-3 py-2">
+              <div key={d.name} className="flex items-center justify-between rounded-lg bg-black/[0.02] px-3 py-2">
                 <span>{d.name}</span>
                 <span className="text-txt-muted tnum">{d.assets} assets · {d.members} members</span>
               </div>
@@ -137,7 +137,7 @@ export default function Reports() {
               <div key={d} className="flex items-center">
                 <div className="w-10 text-[10px] text-txt-muted">{DAYS[d]}</div>
                 {row.map((v, h) => (
-                  <div key={h} className="m-[1px] flex-1 rounded-sm" style={{ aspectRatio: '1', minWidth: 14, background: v ? `rgba(16,185,129,${0.15 + (v / maxHeat) * 0.85})` : 'rgba(255,255,255,0.03)' }} title={`${DAYS[d]} ${h}:00 — ${v} booking(s)`} />
+                  <div key={h} className="m-[1px] flex-1 rounded-sm" style={{ aspectRatio: '1', minWidth: 14, background: v ? `rgba(33,183,153,${0.15 + (v / maxHeat) * 0.85})` : 'rgba(31,41,55,0.04)' }} title={`${DAYS[d]} ${h}:00 — ${v} booking(s)`} />
                 ))}
               </div>
             ))}

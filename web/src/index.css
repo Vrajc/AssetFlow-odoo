@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
@@ -14,7 +14,6 @@ body,
 
 body {
   @apply bg-bg text-txt font-sans antialiased;
-  font-feature-settings: 'cv11', 'ss01';
 }
 
 .tnum {
@@ -27,29 +26,30 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(31, 41, 55, 0.14);
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(31, 41, 55, 0.24);
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-/* Focus ring */
+/* Focus ring — plum */
 *:focus-visible {
-  outline: 2px solid #10b981;
+  outline: 2px solid #714b67;
   outline-offset: 2px;
 }
 
+/* Flat white surface for modals / login card / command palette (no glass/blur) */
 .glass {
-  background: rgba(18, 21, 24, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: #ffffff;
+  border: 1px solid #ebebf0;
+  box-shadow: 0 20px 60px rgba(31, 41, 55, 0.16);
 }
 
-/* Aurora backdrop for login */
+/* Very soft plum/yellow ambient wash for the login backdrop */
 .aurora {
   position: absolute;
   inset: 0;
@@ -60,27 +60,28 @@ body {
 .aurora::after {
   content: '';
   position: absolute;
-  width: 60vw;
-  height: 60vw;
+  width: 52vw;
+  height: 52vw;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.25;
-  animation: float 18s ease-in-out infinite;
+  filter: blur(130px);
+  animation: float 20s ease-in-out infinite;
 }
 .aurora::before {
-  background: #10b981;
+  background: #714b67;
+  opacity: 0.1;
   top: -20%;
-  left: -10%;
+  left: -12%;
 }
 .aurora::after {
-  background: #60a5fa;
-  bottom: -20%;
-  right: -10%;
-  animation-delay: -9s;
+  background: #fbb945;
+  opacity: 0.12;
+  bottom: -22%;
+  right: -12%;
+  animation-delay: -10s;
 }
 @keyframes float {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(6%, 8%) scale(1.1); }
+  50% { transform: translate(5%, 7%) scale(1.08); }
 }
 
 /* Print stylesheet for QR labels */

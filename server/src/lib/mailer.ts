@@ -59,20 +59,21 @@ async function send(to: string, subject: string, html: string): Promise<void> {
 
 /* --------------------------------- Layout --------------------------------- */
 function layout(title: string, body: string, cta?: { label: string; url: string }): string {
-  return `<!doctype html><html><body style="margin:0;background:#0B0D0F;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#F4F5F6;padding:32px 0;">
+  return `<!doctype html><html><body style="margin:0;background:#F4F2F8;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1F2937;padding:32px 0;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
-      <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="background:#121518;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;">
-        <tr><td style="padding:24px 32px;border-bottom:1px solid rgba(255,255,255,0.08);">
-          <span style="display:inline-block;width:30px;height:30px;line-height:30px;text-align:center;background:#10B981;color:#0B0D0F;font-weight:700;border-radius:8px;vertical-align:middle;">A</span>
-          <span style="font-size:18px;font-weight:700;margin-left:8px;vertical-align:middle;">AssetFlow</span>
+      <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #EBEBF0;border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(31,41,55,0.06);">
+        <tr><td style="height:5px;background:#714B67;font-size:0;line-height:0;">&nbsp;</td></tr>
+        <tr><td style="padding:22px 32px;border-bottom:1px solid #EBEBF0;">
+          <span style="display:inline-block;width:32px;height:32px;line-height:32px;text-align:center;background:#714B67;color:#FFFFFF;font-weight:700;border-radius:8px;vertical-align:middle;">A</span>
+          <span style="font-size:18px;font-weight:700;margin-left:8px;vertical-align:middle;color:#714B67;">AssetFlow</span>
         </td></tr>
         <tr><td style="padding:32px;">
-          <h1 style="font-size:20px;margin:0 0 12px;">${title}</h1>
-          <div style="font-size:14px;line-height:1.6;color:#C7CBD1;">${body}</div>
-          ${cta ? `<div style="margin:28px 0 8px;"><a href="${cta.url}" style="display:inline-block;background:#10B981;color:#0B0D0F;font-weight:600;text-decoration:none;padding:12px 22px;border-radius:10px;">${cta.label}</a></div>
-          <p style="font-size:12px;color:#9CA3AF;margin-top:14px;">Or paste this link into your browser:<br><span style="color:#34D399;word-break:break-all;">${cta.url}</span></p>` : ''}
+          <h1 style="font-size:22px;margin:0 0 14px;color:#714B67;font-weight:700;">${title}</h1>
+          <div style="font-size:14px;line-height:1.65;color:#374151;">${body}</div>
+          ${cta ? `<div style="margin:28px 0 8px;"><a href="${cta.url}" style="display:inline-block;background:#714B67;color:#FFFFFF;font-weight:600;text-decoration:none;padding:13px 26px;border-radius:10px;">${cta.label}</a></div>
+          <p style="font-size:12px;color:#6B7280;margin-top:16px;">Or paste this link into your browser:<br><span style="color:#714B67;word-break:break-all;">${cta.url}</span></p>` : ''}
         </td></tr>
-        <tr><td style="padding:18px 32px;border-top:1px solid rgba(255,255,255,0.08);font-size:11px;color:#6B7280;">
+        <tr><td style="padding:18px 32px;border-top:1px solid #EBEBF0;background:#F9F9FB;font-size:11px;color:#8F8F9F;">
           AssetFlow — Enterprise Asset &amp; Resource Management. This is an automated message.
         </td></tr>
       </table>

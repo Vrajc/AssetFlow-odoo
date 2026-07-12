@@ -6,12 +6,15 @@ import { useAuth, roleLabel } from '../stores/auth';
 import { useUI } from '../stores/ui';
 import { visibleNav } from '../lib/nav';
 import { useNotifications } from '../api/hooks';
+import { MODULES } from './ModuleIcon';
+
+const MODULE_COLOR: Record<string, string> = Object.fromEntries(MODULES.map((m) => [m.to, m.color]));
 
 function Logo() {
   return (
     <Link to="/dashboard" className="flex items-center gap-2 px-2">
-      <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-bg font-display font-bold">A</div>
-      <span className="font-display text-lg font-bold tracking-tight">AssetFlow</span>
+      <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-white font-display text-lg font-bold">A</div>
+      <span className="font-display text-lg font-bold tracking-tight text-primary">AssetFlow</span>
     </Link>
   );
 }
@@ -28,24 +31,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <div className="flex h-screen overflow-hidden bg-bg">
       {/* Sidebar */}
       {/* Mobile backdrop */}
-      {mobileOpen && <div className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden" onClick={() => setMobileOpen(false)} />}
+      {mobileOpen && <div className="fixed inset-0 z-30 bg-[#1F2937]/40 lg:hidden" onClick={() => setMobileOpen(false)} />}
 
-      <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 flex-col border-r border-border bg-surface transition-transform duration-300 lg:static lg:translate-x-0 ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
-        <div className="flex h-16 items-center border-b border-border px-3"><Logo /></div>
+      <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 flex-col border-r border-border bg-bg-alt transition-transform duration-300 lg:static lg:translate-x-0 ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        <div className="flex h-16 items-center border-b border-border bg-surface px-3"><Logo /></div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">
-          {items.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              onClick={() => setMobileOpen(false)}
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${isActive ? 'bg-primary/15 text-primary font-medium' : 'text-txt-muted hover:bg-white/5 hover:text-txt'}`
-              }
-            >
-              <item.icon size={18} />
-              {item.label}
-            </NavLink>
-          ))}
+          {items.map((item) => {
+            const color = MODULE_COLOR[item.to] ?? '#714B67';
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={() => setMobileOpen(false)}
+                className={({ isActive }) =>
+                  `relative flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm transition-colors ${isActive ? 'text-primary font-semibold' : 'text-txt-muted hover:bg-tint/60 hover:text-txt'}`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    {isActive && <motion.span layoutId="nav-active" className="absolute inset-0 -z-0 rounded-lg bg-tint" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />}
+                    <span className="relative z-10 grid h-7 w-7 place-items-center rounded-md border border-border bg-surface" style={{ color }}>
+                      <item.icon size={15} />
+                    </span>
+                    <span className="relative z-10">{item.label}</span>
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
         <div className="border-t border-border p-3">
           <div className="flex items-center gap-3 rounded-lg px-2 py-2">
@@ -65,11 +78,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-border bg-surface/80 px-3 backdrop-blur sm:gap-3 sm:px-4">
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-border bg-surface px-3 sm:gap-3 sm:px-4">
           <button className="shrink-0 lg:hidden text-txt-muted" onClick={() => setMobileOpen((v) => !v)}><Menu size={20} /></button>
           <button
             onClick={() => setPalette(true)}
-            className="flex min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-txt-muted hover:border-white/20"
+            className="flex min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border border-border bg-elevated px-3 py-2 text-sm text-txt-muted hover:border-primary/40"
           >
             <Search size={15} className="shrink-0" />
             <span className="flex-1 truncate text-left">Search or jump to…</span>
@@ -79,7 +92,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <button onClick={() => setScanner(true)} className="flex items-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-bg hover:bg-primary-hover">
               <ScanLine size={16} /> <span className="hidden sm:inline">Scan</span>
             </button>
-            <Link to="/notifications" className="relative rounded-lg p-2 text-txt-muted hover:bg-white/5 hover:text-txt">
+            <Link to="/notifications" className="relative rounded-lg p-2 text-txt-muted hover:bg-black/[0.05] hover:text-txt">
               <Bell size={19} />
               {!!notif?.unread && (
                 <motion.span

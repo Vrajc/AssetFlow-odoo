@@ -60,7 +60,7 @@ export default function Maintenance() {
       <PageHeader title="Maintenance" subtitle="Route repairs through approval before work starts. Drag cards across the workflow."
         actions={<Button onClick={() => setRaiseOpen(true)}><Plus size={16} /> Raise Request</Button>} />
 
-      {!isManager(user?.role) && <p className="mb-3 rounded-lg border border-border bg-white/[0.02] px-3 py-2 text-xs text-txt-muted">Drag actions are manager-only — you can still raise requests. Approving a card moves the asset to Under Maintenance; resolving it returns the asset to Available.</p>}
+      {!isManager(user?.role) && <p className="mb-3 rounded-lg border border-border bg-black/[0.02] px-3 py-2 text-xs text-txt-muted">Drag actions are manager-only — you can still raise requests. Approving a card moves the asset to Under Maintenance; resolving it returns the asset to Available.</p>}
 
       <DndContext sensors={sensors} onDragStart={onStart} onDragEnd={onEnd}>
         <div className="flex gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-5 lg:overflow-visible">
@@ -85,7 +85,7 @@ function Column({ id, label, cards, draggable }: { id: string; label: string; ca
     <div ref={setNodeRef} className={`rounded-xl border p-2 transition-colors ${isOver ? 'border-primary/50 bg-primary/5' : 'border-border bg-surface'}`}>
       <div className="mb-2 flex items-center justify-between px-1">
         <span className="text-sm font-medium">{label}</span>
-        <span className="rounded-full bg-white/5 px-2 text-xs text-txt-muted">{cards.length}</span>
+        <span className="rounded-full bg-black/[0.05] px-2 text-xs text-txt-muted">{cards.length}</span>
       </div>
       <div className="min-h-[120px] space-y-2">
         {cards.map((c) => draggable ? <Draggable key={c.id} card={c} /> : <CardBody key={c.id} card={c} />)}

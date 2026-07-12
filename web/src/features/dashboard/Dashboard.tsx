@@ -7,15 +7,23 @@ import {
 import { useKpis, useOverdue, useActivity } from '../../api/hooks';
 import { useAuth, isManager } from '../../stores/auth';
 import { Card, Skeleton, PageHeader } from '../../components/ui';
+import { Annotation, Arrow } from '../../components/accents';
 import { CountUp, ago } from '../../lib/format';
 
+function greeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 18) return 'Good afternoon';
+  return 'Good evening';
+}
+
 const CARDS = [
-  { key: 'available', label: 'Assets Available', icon: Boxes, color: '#10B981' },
-  { key: 'allocated', label: 'Assets Allocated', icon: PackageCheck, color: '#60A5FA' },
-  { key: 'maintenanceToday', label: 'Maintenance Today', icon: Wrench, color: '#FBBF24' },
-  { key: 'activeBookings', label: 'Active Bookings', icon: CalendarClock, color: '#A78BFA' },
-  { key: 'pendingTransfers', label: 'Pending Transfers', icon: ArrowLeftRight, color: '#34D399' },
-  { key: 'upcomingReturns', label: 'Upcoming Returns', icon: RotateCcw, color: '#60A5FA' },
+  { key: 'available', label: 'Assets Available', icon: Boxes, color: '#21B799' },
+  { key: 'allocated', label: 'Assets Allocated', icon: PackageCheck, color: '#5B9BD5' },
+  { key: 'maintenanceToday', label: 'Maintenance Today', icon: Wrench, color: '#E9A93D' },
+  { key: 'activeBookings', label: 'Active Bookings', icon: CalendarClock, color: '#714B67' },
+  { key: 'pendingTransfers', label: 'Pending Transfers', icon: ArrowLeftRight, color: '#21B799' },
+  { key: 'upcomingReturns', label: 'Upcoming Returns', icon: RotateCcw, color: '#5B9BD5' },
 ];
 
 export default function Dashboard() {
@@ -27,7 +35,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <PageHeader title={`Today’s Overview`} subtitle={`Welcome back, ${user?.name?.split(' ')[0]}. Here’s your real-time snapshot.`} />
+      <PageHeader title={`${greeting()}, ${user?.name?.split(' ')[0] ?? ''}!`} subtitle={`Here’s your real-time snapshot for today.`} />
 
       {/* KPI cards */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
@@ -69,10 +77,10 @@ export default function Dashboard() {
             <Plus size={16} /> Register Asset
           </button>
         )}
-        <button onClick={() => nav('/bookings')} className="flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm hover:bg-white/5">
+        <button onClick={() => nav('/bookings')} className="flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm hover:bg-black/[0.05]">
           <CalendarPlus size={16} /> Book Resource
         </button>
-        <button onClick={() => nav('/maintenance?new=1')} className="flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm hover:bg-white/5">
+        <button onClick={() => nav('/maintenance?new=1')} className="flex items-center gap-2 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm hover:bg-black/[0.05]">
           <WrenchIcon size={16} /> Raise Maintenance Request
         </button>
       </div>
@@ -85,12 +93,16 @@ export default function Dashboard() {
           <span className="ml-2 flex items-center gap-1.5 text-xs text-txt-muted">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" /> live
           </span>
+          <span className="ml-auto hidden items-center gap-1.5 sm:inline-flex">
+            <Annotation text="updates live!" color="#E9A93D" className="leading-none" />
+            <Arrow width={34} height={28} flip />
+          </span>
         </div>
         <div className="divide-y divide-border">
           {(activity ?? []).slice(0, 12).map((a: any) => (
             <div key={a.id} className="flex items-center justify-between py-2.5 text-sm">
               <div className="flex items-center gap-3">
-                <span className="rounded-md bg-white/5 px-2 py-0.5 font-mono text-[11px] text-txt-muted">{a.action}</span>
+                <span className="rounded-md bg-black/[0.05] px-2 py-0.5 font-mono text-[11px] text-txt-muted">{a.action}</span>
                 <span className="text-txt-muted">
                   {a.actor?.name ?? 'System'}
                   {a.metadata?.assetTag && <> · <span className="text-primary">{a.metadata.assetTag}</span></>}

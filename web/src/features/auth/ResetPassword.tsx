@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ArrowLeft } from 'lucide-react';
 import { api, apiError } from '../../api/client';
 import { Button, PasswordInput } from '../../components/ui';
 
@@ -35,26 +35,29 @@ export default function ResetPassword() {
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg px-4">
       <div className="aurora" />
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="relative z-10 w-full max-w-md">
+        <Link to="/" className="mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-txt-muted transition-colors hover:text-primary">
+          <ArrowLeft size={15} /> Back to home
+        </Link>
         <div className="mb-6 flex items-center justify-center gap-2">
-          <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary text-bg font-display text-xl font-bold">A</div>
-          <span className="font-display text-2xl font-bold">AssetFlow</span>
+          <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary text-xl font-bold text-white">A</div>
+          <span className="font-display text-2xl font-bold text-primary">AssetFlow</span>
         </div>
         <div className="glass rounded-2xl border border-border p-6 shadow-soft">
           {done ? (
             <div className="flex flex-col items-center gap-3 py-6 text-center">
               <CheckCircle2 size={40} className="text-primary" />
-              <h1 className="font-display text-xl font-semibold">Password updated</h1>
+              <h1 className="font-script text-3xl font-bold text-txt">Password updated</h1>
               <p className="text-sm text-txt-muted">Redirecting you to sign in…</p>
             </div>
           ) : !token ? (
             <div className="text-center">
-              <h1 className="font-display text-xl font-semibold">Invalid reset link</h1>
+              <h1 className="font-script text-3xl font-bold text-txt">Invalid reset link</h1>
               <p className="mt-2 text-sm text-txt-muted">This link is missing a token. Request a new one from the sign-in screen.</p>
               <Link to="/login" className="mt-4 inline-block text-primary hover:underline">← Back to sign in</Link>
             </div>
           ) : (
             <>
-              <h1 className="font-display text-xl font-semibold">Choose a new password</h1>
+              <h1 className="font-script text-3xl font-bold text-txt">Choose a new password</h1>
               <p className="mt-1 text-sm text-txt-muted">Enter a new password for your account.</p>
               <form onSubmit={submit} className="mt-5 space-y-3">
                 <PasswordInput label="New password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />

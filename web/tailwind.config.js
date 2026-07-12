@@ -4,24 +4,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#0B0D0F',
-        surface: '#121518',
-        elevated: '#1A1E23',
-        border: 'rgba(255,255,255,0.08)',
-        primary: { DEFAULT: '#10B981', hover: '#34D399' },
-        danger: '#F87171',
-        warning: '#FBBF24',
-        info: '#60A5FA',
-        audit: '#A78BFA',
-        txt: { DEFAULT: '#F4F5F6', muted: '#9CA3AF' },
+        // "Playful Enterprise" — Odoo-inspired white & plum
+        bg: '#FFFFFF',
+        'bg-alt': '#F4F2F8',
+        surface: '#FFFFFF',
+        elevated: '#F3F4F6',
+        border: '#EBEBF0',
+        primary: { DEFAULT: '#714B67', hover: '#5D3E55' },
+        tint: '#F3EDF1',
+        highlight: '#FBB945', // marker yellow
+        // Semantic status colors
+        success: '#21B799', // teal — available / verified / resolved
+        info: '#5B9BD5', // blue — allocated / booking / info
+        warning: '#E9A93D', // ochre — pending / under-maintenance
+        danger: '#E4585B', // red — overdue / blocked / missing / rejected
+        neutral: '#8F8F9F', // warm gray — retired / disposed / inactive
+        audit: '#714B67', // (kept for back-compat; maps to plum)
+        txt: { DEFAULT: '#1F2937', muted: '#6B7280' },
       },
       fontFamily: {
-        display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        // Caveat is decorative — only for designated headlines. Inter for all data.
+        script: ['Caveat', 'ui-rounded', 'cursive'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        soft: '0 2px 20px rgba(0,0,0,0.35)',
-        glow: '0 0 0 1px rgba(16,185,129,0.4), 0 8px 30px rgba(16,185,129,0.15)',
+        soft: '0 1px 3px rgba(31,41,55,0.06)',
+        hover: '0 6px 24px rgba(31,41,55,0.08)',
+        elevated: '0 12px 40px rgba(31,41,55,0.12)',
+        'primary-btn': '0 2px 8px rgba(113,75,103,0.28)',
       },
       keyframes: {
         shimmer: { '100%': { transform: 'translateX(100%)' } },

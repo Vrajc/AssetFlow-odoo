@@ -43,8 +43,8 @@ export default function Notifications() {
               {items.map((n) => (
                 <motion.div key={n.id} initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }}
                   onClick={() => !n.read && m.markRead.mutate(n.id)}
-                  className={`flex cursor-pointer items-start gap-3 px-4 py-3 hover:bg-white/[0.02] ${!n.read ? 'bg-primary/[0.04]' : ''}`}>
-                  <div className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/5 text-txt-muted"><Bell size={15} /></div>
+                  className={`flex cursor-pointer items-start gap-3 px-4 py-3 hover:bg-tint/50 ${!n.read ? 'bg-primary/[0.04]' : ''}`}>
+                  <div className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-black/[0.05] text-txt-muted"><Bell size={15} /></div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-medium">{n.title}</p>
@@ -69,7 +69,7 @@ export default function Notifications() {
               {activity?.map((a: any) => (
                 <div key={a.id} className="flex items-center justify-between px-4 py-2.5 text-sm">
                   <div className="flex items-center gap-2">
-                    <span className="rounded-md bg-white/5 px-2 py-0.5 font-mono text-[10px] text-txt-muted">{a.action}</span>
+                    <span className="rounded-md bg-black/[0.05] px-2 py-0.5 font-mono text-[10px] text-txt-muted">{a.action}</span>
                     <span className="text-txt-muted">{a.actor?.name ?? 'System'} {a.actor && <span className="text-[10px]">({roleLabel(a.actor.role)})</span>}</span>
                   </div>
                   <span className="text-xs text-txt-muted">{ago(a.createdAt)}</span>

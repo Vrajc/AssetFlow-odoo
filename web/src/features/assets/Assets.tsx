@@ -68,7 +68,7 @@ export default function Assets() {
                 <tr key={i} className="border-b border-border/60"><td colSpan={7} className="px-4 py-3"><Skeleton className="h-5 w-full" /></td></tr>
               ))}
               {data?.items.map((a) => (
-                <tr key={a.id} className="border-b border-border/60 hover:bg-white/[0.02]">
+                <tr key={a.id} className="border-b border-border/60 hover:bg-tint/50">
                   <td className="px-4 py-3"><Link to={`/assets/${a.assetTag}`} className="font-mono text-primary hover:underline">{a.assetTag}</Link></td>
                   <td className="px-4 py-3 font-medium">{a.name}{a.isBookable && <span className="ml-2 rounded bg-info/15 px-1.5 py-0.5 text-[10px] text-info">bookable</span>}</td>
                   <td className="px-4 py-3 text-txt-muted">{a.category?.name}</td>

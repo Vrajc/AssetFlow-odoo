@@ -35,10 +35,10 @@ export default function AuditDetail() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="font-display text-2xl font-bold">{cycle.name}</h1>
-            <Pill style={closed ? { label: 'Closed', dot: '#9CA3AF', bg: '#9CA3AF20', text: '#9CA3AF' } : { label: 'Open', dot: '#10B981', bg: '#10B98120', text: '#10B981' }} />
+            <Pill style={closed ? { label: 'Closed', dot: '#8F8F9F', bg: '#8F8F9F20', text: '#8F8F9F' } : { label: 'Open', dot: '#21B799', bg: '#21B79920', text: '#21B799' }} />
           </div>
           <p className="mt-1 text-sm text-txt-muted">{cycle.done}/{cycle.total} verified · Auditors: {cycle.auditors?.map((a: any) => a.auditor.name).join(', ')}</p>
-          <div className="mt-2 h-2 w-64 overflow-hidden rounded-full bg-white/5">
+          <div className="mt-2 h-2 w-64 overflow-hidden rounded-full bg-black/[0.05]">
             <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${cycle.progress}%` }} />
           </div>
         </div>
@@ -65,7 +65,7 @@ export default function AuditDetail() {
                         <div className="inline-flex overflow-hidden rounded-lg border border-border">
                           {VERIFY.map((v) => (
                             <button key={v} onClick={() => mark(it.id, v)}
-                              className={`px-2.5 py-1 text-xs ${it.verification === v ? 'text-bg font-medium' : 'text-txt-muted hover:bg-white/5'}`}
+                              className={`px-2.5 py-1 text-xs ${it.verification === v ? 'text-bg font-medium' : 'text-txt-muted hover:bg-black/[0.05]'}`}
                               style={it.verification === v ? { background: AUDIT_VERIFY[v].text } : {}}>
                               {AUDIT_VERIFY[v].label}
                             </button>
@@ -158,7 +158,7 @@ function AuditScanner({ cycleId, onClose }: { cycleId: string; onClose: () => vo
             <div id="audit-qr" className="mx-auto aspect-square w-full max-w-[15rem] overflow-hidden rounded-xl border border-border bg-black sm:max-w-xs" />
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" onClick={start}><Camera size={16} /> Camera</Button>
-              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-border px-3.5 py-2 text-sm text-txt transition-colors hover:bg-white/5">
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-border px-3.5 py-2 text-sm text-txt transition-colors hover:bg-black/[0.05]">
                 <ImageUp size={16} /> Upload image
                 <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) scanFromFile(f); e.target.value = ''; }} />
               </label>
