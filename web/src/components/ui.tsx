@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { X, Loader2, Inbox } from 'lucide-react';
-import { useEffect } from 'react';
+import { X, Loader2, Inbox, Eye, EyeOff } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import type { PillStyle } from '../lib/status';
 
 /* --------------------------------- Button --------------------------------- */
@@ -63,6 +63,33 @@ export function Input({ label, error, className = '', ...props }: React.InputHTM
         {...props}
         className={`w-full rounded-lg border bg-elevated px-3 py-2 text-sm text-txt placeholder:text-txt-muted/60 focus:border-primary ${error ? 'border-danger' : 'border-border'} ${className}`}
       />
+      {error && <span className="mt-1 block text-xs text-danger">{error}</span>}
+    </label>
+  );
+}
+
+/** Password field with a show/hide eye toggle. */
+export function PasswordInput({ label, error, className = '', ...props }: React.InputHTMLAttributes<HTMLInputElement> & { label?: string; error?: string }) {
+  const [show, setShow] = useState(false);
+  return (
+    <label className="block">
+      {label && <span className="mb-1.5 block text-xs font-medium text-txt-muted">{label}</span>}
+      <div className="relative">
+        <input
+          {...props}
+          type={show ? 'text' : 'password'}
+          className={`w-full rounded-lg border bg-elevated px-3 py-2 pr-10 text-sm text-txt placeholder:text-txt-muted/60 focus:border-primary ${error ? 'border-danger' : 'border-border'} ${className}`}
+        />
+        <button
+          type="button"
+          onClick={() => setShow((v) => !v)}
+          tabIndex={-1}
+          aria-label={show ? 'Hide password' : 'Show password'}
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-txt-muted transition-colors hover:text-txt"
+        >
+          {show ? <EyeOff size={16} /> : <Eye size={16} />}
+        </button>
+      </div>
       {error && <span className="mt-1 block text-xs text-danger">{error}</span>}
     </label>
   );

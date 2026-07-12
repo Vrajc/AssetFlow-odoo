@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { CheckCircle2 } from 'lucide-react';
 import { api, apiError } from '../../api/client';
-import { Button, Input } from '../../components/ui';
+import { Button, PasswordInput } from '../../components/ui';
 
 export default function ResetPassword() {
   const [params] = useSearchParams();
@@ -57,8 +57,8 @@ export default function ResetPassword() {
               <h1 className="font-display text-xl font-semibold">Choose a new password</h1>
               <p className="mt-1 text-sm text-txt-muted">Enter a new password for your account.</p>
               <form onSubmit={submit} className="mt-5 space-y-3">
-                <Input label="New password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
-                <Input label="Confirm password" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="••••••••" required />
+                <PasswordInput label="New password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
+                <PasswordInput label="Confirm password" value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="••••••••" required />
                 {err && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{err}</p>}
                 <Button type="submit" loading={loading} className="w-full">Update password</Button>
               </form>

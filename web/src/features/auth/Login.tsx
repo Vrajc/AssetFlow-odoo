@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { api, apiError } from '../../api/client';
 import { useAuth } from '../../stores/auth';
-import { Button, Input } from '../../components/ui';
+import { Button, Input, PasswordInput } from '../../components/ui';
 
 const DEMO = [
   { email: 'admin@assetflow.io', label: 'Admin' },
@@ -78,7 +78,7 @@ export default function Login() {
           <form onSubmit={submit} className="mt-5 space-y-3">
             {mode === 'signup' && <Input label="Full name" value={form.name} onChange={set('name')} placeholder="Jane Doe" required />}
             <Input label="Email" type="email" value={form.email} onChange={set('email')} placeholder="name@company.com" required />
-            {mode !== 'forgot' && <Input label="Password" type="password" value={form.password} onChange={set('password')} placeholder="••••••••" required />}
+            {mode !== 'forgot' && <PasswordInput label="Password" value={form.password} onChange={set('password')} placeholder="••••••••" required />}
             {err.form && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{err.form}</p>}
             <Button type="submit" loading={loading} className="w-full">
               {mode === 'login' ? 'Sign in' : mode === 'signup' ? 'Create account' : 'Send reset token'}
