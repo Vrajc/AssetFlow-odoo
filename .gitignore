@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+npm-debug.log*
+.DS_Store
+server/uploads/*
+!server/uploads/.gitkeep
+coverage/
+.vite/
+
+# Claude / AI assistant artifacts
+.claude/
+.claude/**
+CLAUDE.md
+**/CLAUDE.md
+.claude.json
+.mcp.json
+.aider*
