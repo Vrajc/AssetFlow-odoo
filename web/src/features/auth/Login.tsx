@@ -114,6 +114,7 @@ export default function Login() {
             ))}
           </div>
           <p className="mt-2 text-center text-[11px] text-txt-muted">Password for all demo accounts: <span className="font-mono">Demo@123</span></p>
+          <p className="mt-1 text-center text-[11px] text-txt-muted/80">These credentials are for the demo video only — no other purpose.</p>
         </div>
       </motion.div>
     </div>

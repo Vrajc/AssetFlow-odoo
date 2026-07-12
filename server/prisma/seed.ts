@@ -218,12 +218,7 @@ async function main() {
     ],
   });
 
-  console.log('[seed] Done.');
-  console.log('[seed] Demo logins (password: Demo@123):');
-  console.log('   admin@assetflow.io   (Admin)');
-  console.log('   meera@assetflow.io   (Asset Manager)');
-  console.log('   aditi@assetflow.io   (Department Head — Engineering)');
-  console.log('   priya@assetflow.io   (Employee — holds AF-0114)');
+  console.log('[seed] Done. Demo accounts created — use the one-click demo buttons on the sign-in screen.');
 }
 
 main()

@@ -112,14 +112,10 @@ npm run dev                           # http://localhost:5173
 
 ## 🔑 Demo logins
 
-All accounts share the password **`Demo@123`** — one-click buttons are on the login screen.
-
-| Role | Email | Can do |
-|---|---|---|
-| **Admin** | `admin@assetflow.io` | Org setup, promote roles, audit cycles, org-wide analytics |
-| **Asset Manager** | `meera@assetflow.io` | Register/allocate assets, approve transfers/maintenance/returns |
-| **Department Head** | `aditi@assetflow.io` | Approve dept transfers, book on behalf of dept |
-| **Employee** | `priya@assetflow.io` | Holds **Laptop AF-0114** — the double-allocation demo |
+Four seeded demo accounts (one per role: **Admin**, **Asset Manager**, **Department Head**,
+**Employee**) are available as **one-click buttons on the login screen**. These accounts exist purely
+for the demo video — no other purpose. Credentials are intentionally not listed here; just use the
+one-click buttons after seeding.
 
 ---
 
