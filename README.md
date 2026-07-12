@@ -119,28 +119,6 @@ one-click buttons after seeding.
 
 ---
 
-## 🎬 2-minute judge demo script
-
-1. **Login as Admin** (one-click) → the **Dashboard** shows live KPI cards, a red **overdue-returns**
-   strip, and a live activity feed.
-2. **Double-allocation** → go to **Allocation & Transfer**, pick `AF-0114 Dell Laptop`, choose any
-   employee, Allocate → the red block appears: *"Already allocated to Priya Shah (Engineering)"* with
-   a **Submit a Transfer Request** form. Submit it.
-3. **Realtime** → open a **second window** logged in as **Meera (Asset Manager)**. Approve the
-   transfer — watch the first window's list and KPIs update **instantly**.
-4. **Overlap booking** → **Resource Booking**, select **Conference Room B2**. Click today's 9:30 slot
-   and try 9:30–10:30 → rejected with *"conflict: slot is unavailable"* and a nearest-free-slot
-   suggestion. Book 10:00–11:00 → accepted (back-to-back is fine).
-5. **Maintenance Kanban** → drag a card from **Pending → Approved** (asset flips to *Under
-   Maintenance* live on the Assets screen), then across to **Resolved**.
-6. **Audit scan** → open the **Q3 Engineering** cycle → **Scan to verify** → enter/scan `AF-0114` →
-   one-tap **Verified**. Watch the progress ring animate. Then **Close Cycle** to see the consequence
-   summary (missing → Lost, damaged → maintenance request).
-7. **Reports** → the **booking heatmap** and utilization charts. **⌘/Ctrl-K** anywhere opens the
-   command palette.
-
----
-
 ## 🧩 Feature → screen map
 
 | # | Screen | Notes |
