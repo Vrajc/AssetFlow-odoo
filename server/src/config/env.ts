@@ -17,4 +17,10 @@ export const env = {
   PORT: parseInt(process.env.PORT ?? '4000', 10),
   WEB_ORIGIN: process.env.WEB_ORIGIN ?? 'http://localhost:5173',
   NODE_ENV: process.env.NODE_ENV ?? 'development',
+  // Email (SMTP). Leave blank to use a zero-config Ethereal test inbox in dev.
+  SMTP_HOST: process.env.SMTP_HOST ?? '',
+  SMTP_PORT: parseInt(process.env.SMTP_PORT ?? '587', 10),
+  SMTP_USER: process.env.SMTP_USER ?? '',
+  SMTP_PASS: process.env.SMTP_PASS ?? '',
+  SMTP_FROM: process.env.SMTP_FROM ?? 'AssetFlow <no-reply@assetflow.io>',
 };

@@ -4,6 +4,7 @@ import { prisma } from '../../lib/prisma';
 import { signToken } from '../../middleware/auth';
 import { badRequest, unauthorized } from '../../utils/errors';
 import { logActivity } from '../activity/service';
+import { sendWelcomeEmail, sendPasswordResetEmail } from '../../lib/mailer';
 
 const publicUser = {
   id: true,
@@ -26,6 +27,8 @@ export async function signup(input: { name: string; email: string; password: str
     select: publicUser,
   });
   await logActivity({ actorId: user.id, action: 'USER_SIGNUP', entityType: 'User', entityId: user.id });
+  // Fire-and-forget welcome email — never block signup on delivery.
+  void sendWelcomeEmail(user.email, user.name);
   const token = signToken({ id: user.id, role: user.role });
   return { token, user };
 }
@@ -53,8 +56,9 @@ export async function forgotPassword(email: string) {
     resetTokens.set(token, { email, expires: Date.now() + 1000 * 60 * 30 });
     // eslint-disable-next-line no-console
     console.log(`\n[AssetFlow] Password reset token for ${email}:\n  ${token}\n`);
+    void sendPasswordResetEmail(email, token);
   }
-  return { message: 'If that email exists, a reset token has been generated (check server console).' };
+  return { message: 'If that email exists, a password reset link has been emailed (check your inbox / server console for the preview link).' };
 }
 
 export async function resetPassword(token: string, newPassword: string) {
