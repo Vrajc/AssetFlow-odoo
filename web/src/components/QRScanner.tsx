@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Html5Qrcode } from 'html5-qrcode';
 import toast from 'react-hot-toast';
-import { Camera, Keyboard } from 'lucide-react';
+import { Camera, Keyboard, ImageUp } from 'lucide-react';
 import { useUI } from '../stores/ui';
 import { Modal, Button, Input } from './ui';
 import { api, apiError } from '../api/client';
@@ -57,15 +57,34 @@ export function QRScanner() {
     setCamActive(false);
   }
 
+  async function scanFromFile(file: File) {
+    await stop();
+    const s = new Html5Qrcode('qr-reader');
+    try {
+      const text = await s.scanFile(file, false);
+      resolve(text);
+    } catch {
+      toast.error('No QR code found in that image');
+    } finally {
+      try { await s.clear(); } catch { /* noop */ }
+    }
+  }
+
   return (
     <Modal open={scannerOpen} onClose={() => setScanner(false)} title="Scan asset QR">
       <div className="space-y-4">
         <div id="qr-reader" className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-black" />
-        {!camActive ? (
-          <Button variant="outline" className="w-full" onClick={start}><Camera size={16} /> Start camera</Button>
-        ) : (
-          <Button variant="ghost" className="w-full" onClick={stop}>Stop camera</Button>
-        )}
+        <div className="grid grid-cols-2 gap-2">
+          {!camActive ? (
+            <Button variant="outline" onClick={start}><Camera size={16} /> Camera</Button>
+          ) : (
+            <Button variant="ghost" onClick={stop}>Stop camera</Button>
+          )}
+          <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-border px-3.5 py-2 text-sm text-txt transition-colors hover:bg-white/5">
+            <ImageUp size={16} /> Upload image
+            <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) scanFromFile(f); e.target.value = ''; }} />
+          </label>
+        </div>
         <div className="flex items-center gap-2 text-xs text-txt-muted">
           <div className="h-px flex-1 bg-border" /> or enter tag manually <div className="h-px flex-1 bg-border" />
         </div>

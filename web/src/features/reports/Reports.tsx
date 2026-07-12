@@ -1,8 +1,10 @@
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { Download, TrendingUp, Clock } from 'lucide-react';
+import { Download, TrendingUp, Clock, FileText } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useUtilization, useMaintFreq, useMostUsedIdle, useDueSoon, useHeatmap, useDeptAllocation } from '../../api/hooks';
 import { Card, PageHeader, Button } from '../../components/ui';
-import { API_URL } from '../../api/client';
+import { downloadFile, apiError } from '../../api/client';
+import { printReport } from '../../lib/reportExport';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -15,18 +17,27 @@ export default function Reports() {
   const { data: deptAlloc } = useDeptAllocation();
 
   const maxHeat = Math.max(1, ...(heat?.grid.flat() ?? [1]));
-  const exportUrl = (type: string) => `${API_URL}/api/v1/reports/export?type=${type}`;
+  const exportCsv = (type: string) =>
+    downloadFile(`/reports/export?type=${type}`, `${type}.csv`).catch((e) => toast.error(apiError(e).message));
+  const exportPdf = () => {
+    try {
+      printReport({ util, freq, mui, due, deptAlloc, heat });
+    } catch (e) {
+      toast.error((e as Error).message);
+    }
+  };
 
   return (
     <div>
-      <PageHeader title="Reports & Analytics" subtitle="Actionable operational insight." />
+      <PageHeader title="Reports & Analytics" subtitle="Actionable operational insight."
+        actions={<Button onClick={exportPdf}><FileText size={16} /> Export report (PDF)</Button>} />
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Utilization by department */}
         <Card className="p-5">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="font-medium">Utilization by department</h3>
-            <a href={exportUrl('utilization')} className="text-xs text-primary hover:underline inline-flex items-center gap-1"><Download size={12} /> CSV</a>
+            <button onClick={() => exportCsv('utilization')} className="text-xs text-primary hover:underline inline-flex items-center gap-1"><Download size={12} /> CSV</button>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={util ?? []}>
@@ -99,7 +110,7 @@ export default function Reports() {
         <Card className="p-5">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="font-medium">Department-wise allocation</h3>
-            <a href={exportUrl('dept-allocation')} className="text-xs text-primary hover:underline inline-flex items-center gap-1"><Download size={12} /> CSV</a>
+            <button onClick={() => exportCsv('dept-allocation')} className="text-xs text-primary hover:underline inline-flex items-center gap-1"><Download size={12} /> CSV</button>
           </div>
           <div className="space-y-1.5 text-sm">
             {deptAlloc?.map((d: any) => (
@@ -134,8 +145,9 @@ export default function Reports() {
         </div>
       </Card>
 
-      <div className="mt-4 flex justify-end">
-        <a href={exportUrl('utilization')}><Button variant="outline"><Download size={16} /> Export report</Button></a>
+      <div className="mt-4 flex justify-end gap-2">
+        <Button variant="outline" onClick={() => exportCsv('utilization')}><Download size={16} /> Export CSV</Button>
+        <Button onClick={exportPdf}><FileText size={16} /> Export report (PDF)</Button>
       </div>
     </div>
   );

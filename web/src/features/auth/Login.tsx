@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { api, apiError } from '../../api/client';
@@ -15,8 +15,9 @@ const DEMO = [
 
 export default function Login() {
   const nav = useNavigate();
+  const [params] = useSearchParams();
   const setSession = useAuth((s) => s.setSession);
-  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>(params.get('signup') === '1' ? 'signup' : 'login');
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<Record<string, string>>({});

@@ -35,3 +35,20 @@ export function fileUrl(path?: string | null): string | undefined {
   if (path.startsWith('http')) return path;
   return `${API_URL}${path}`;
 }
+
+/**
+ * Download a file from an authenticated API endpoint. A plain <a href> can't
+ * carry the JWT header, so we fetch it as a blob through axios and trigger the
+ * download client-side. `path` is relative to the /api/v1 base.
+ */
+export async function downloadFile(path: string, filename: string): Promise<void> {
+  const res = await api.get(path, { responseType: 'blob' });
+  const url = URL.createObjectURL(res.data as Blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}

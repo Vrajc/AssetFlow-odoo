@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Html5Qrcode } from 'html5-qrcode';
 import toast from 'react-hot-toast';
-import { ArrowLeft, ScanLine, Lock, AlertTriangle, Download, Camera } from 'lucide-react';
+import { ArrowLeft, ScanLine, Lock, AlertTriangle, Download, Camera, ImageUp } from 'lucide-react';
 import { useAuditCycle, useDiscrepancyReport, useAuditMutations } from '../../api/hooks';
 import { useAuth } from '../../stores/auth';
 import { Card, Button, Pill, Skeleton, Modal } from '../../components/ui';
 import { AUDIT_VERIFY } from '../../lib/status';
-import { API_URL, apiError } from '../../api/client';
+import { downloadFile, apiError } from '../../api/client';
 
 const VERIFY = ['VERIFIED', 'MISSING', 'DAMAGED'] as const;
 
@@ -85,7 +85,9 @@ export default function AuditDetail() {
           <div className="mb-3 flex items-center justify-between">
             <h3 className="flex items-center gap-2 font-medium"><AlertTriangle size={16} className="text-warning" /> Discrepancy report</h3>
             {!!discrepancies.length && (
-              <a href={`${API_URL}/api/v1/audit-cycles/${id}/discrepancy-report?format=csv`} className="text-xs text-primary hover:underline inline-flex items-center gap-1"><Download size={12} /> CSV</a>
+              <button
+                onClick={() => downloadFile(`/audit-cycles/${id}/discrepancy-report?format=csv`, `discrepancy-${id}.csv`).catch((e) => toast.error(apiError(e).message))}
+                className="text-xs text-primary hover:underline inline-flex items-center gap-1"><Download size={12} /> CSV</button>
             )}
           </div>
           <p className="mb-2 text-xs text-txt-muted">Auto-generated from flagged items.</p>
@@ -127,6 +129,19 @@ function AuditScanner({ cycleId, onClose }: { cycleId: string; onClose: () => vo
     } catch { toast.error('Camera unavailable — enter tag manually'); }
   };
 
+  const scanFromFile = async (file: File) => {
+    try { await scanner?.stop(); } catch { /* noop */ }
+    const s = new Html5Qrcode('audit-qr');
+    try {
+      const text = await s.scanFile(file, false);
+      setTag(text.replace('assetflow://asset/', '').trim());
+    } catch {
+      toast.error('No QR code found in that image');
+    } finally {
+      try { await s.clear(); } catch { /* noop */ }
+    }
+  };
+
   const doMark = (verification: string) => {
     if (!tag) return;
     m.markByTag.mutate({ cycleId, assetTag: tag, verification }, {
@@ -141,7 +156,13 @@ function AuditScanner({ cycleId, onClose }: { cycleId: string; onClose: () => vo
         {!tag ? (
           <>
             <div id="audit-qr" className="mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-xl border border-border bg-black" />
-            <Button variant="outline" className="w-full" onClick={start}><Camera size={16} /> Start camera</Button>
+            <div className="grid grid-cols-2 gap-2">
+              <Button variant="outline" onClick={start}><Camera size={16} /> Camera</Button>
+              <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-border px-3.5 py-2 text-sm text-txt transition-colors hover:bg-white/5">
+                <ImageUp size={16} /> Upload image
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) scanFromFile(f); e.target.value = ''; }} />
+              </label>
+            </div>
             <form onSubmit={(e) => { e.preventDefault(); if (manual.trim()) setTag(manual.trim().replace('assetflow://asset/', '')); }} className="flex gap-2">
               <input value={manual} onChange={(e) => setManual(e.target.value)} placeholder="Enter tag e.g. AF-0114" className="flex-1 rounded-lg border border-border bg-elevated px-3 py-2 text-sm" />
               <Button type="submit">Load</Button>

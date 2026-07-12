@@ -8,6 +8,8 @@ import { CommandPalette } from './components/CommandPalette';
 import { QRScanner } from './components/QRScanner';
 
 import Login from './features/auth/Login';
+import ResetPassword from './features/auth/ResetPassword';
+import Landing from './features/landing/Landing';
 import Dashboard from './features/dashboard/Dashboard';
 import OrgSetup from './features/org/OrgSetup';
 import Assets from './features/assets/Assets';
@@ -50,8 +52,9 @@ export default function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Protected><Dashboard /></Protected>} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<Protected><Dashboard /></Protected>} />
         <Route path="/organization" element={<Protected><OrgSetup /></Protected>} />
         <Route path="/assets" element={<Protected><Assets /></Protected>} />
